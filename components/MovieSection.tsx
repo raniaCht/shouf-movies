@@ -1,16 +1,22 @@
-import { getFeaturedMovies, getGenres } from "@/util/getMovies";
+import { getGenres, getMoviesByType } from "@/util/getMovies";
 import { Genre, MovieType } from "@/util/movieType";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Carousel from "./Carousel";
 import { EmblaOptionsType } from "embla-carousel";
 
-const MovieSection = async ({ title }: { title: string }) => {
-  const resMovie = await getFeaturedMovies();
+const MovieSection = async ({
+  title,
+  type,
+}: {
+  title: string;
+  type: string;
+}) => {
+  const resMovie = await getMoviesByType(type);
   const resGenre = await getGenres();
+
   const movies: MovieType[] = resMovie.results;
   const genres: Genre[] = resGenre.genres;
-  const OPTIONS: EmblaOptionsType = { dragFree: true, loop: true };
 
   return (
     <div className="my-5">
@@ -22,7 +28,7 @@ const MovieSection = async ({ title }: { title: string }) => {
         </Link>
       </div>
       <div className="">
-        <Carousel options={OPTIONS} slides={movies} genres={genres} />
+        <Carousel slides={movies} genres={genres} type="movie" />
       </div>
     </div>
   );

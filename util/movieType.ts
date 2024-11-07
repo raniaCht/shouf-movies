@@ -1,4 +1,4 @@
-export type MovieType = {
+export interface MovieType {
   adult: boolean;
   backdrop_path: string;
   genre_ids: any[];
@@ -13,7 +13,7 @@ export type MovieType = {
   video: boolean;
   vote_average: number;
   vote_count: number;
-};
+}
 export type MoviesType = {
   page: number;
   results: MovieType[];
@@ -68,4 +68,16 @@ export interface SpokenLanguage {
   english_name: string;
   iso_639_1: string;
   name: string;
+}
+
+export interface ActorType {
+  id: number;
+  name: string;
+  original_name: string;
+  media_type: string;
+  adult: boolean;
+  popularity: number;
+  gender: number;
+  known_for_department: string;
+  profile_path: string;
 }

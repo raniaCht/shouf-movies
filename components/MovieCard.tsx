@@ -6,7 +6,7 @@ import RatingMovie from "./RatingMovie";
 
 type props = {
   movie: MovieType;
-  genres: Genre[];
+  genres: Genre[] | undefined;
 };
 
 const MovieCard = ({ movie, genres }: props) => {

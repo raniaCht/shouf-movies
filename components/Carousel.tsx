@@ -8,20 +8,22 @@ import { EmblaOptionsType, EmblaCarouselType } from "embla-carousel";
 // } from "./EmblaCarouselArrowButtons";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import { Genre, MovieType } from "@/util/movieType";
+import { ActorType, Genre, MovieType } from "@/util/movieType";
 import MovieCard from "./MovieCard";
 import usePrevNextButtons, {
   NextButton,
   PrevButton,
 } from "./CarouselArrowButtons";
+import ActorCard from "./ActorCard";
 
 type PropType = {
-  slides: MovieType[];
-  options?: EmblaOptionsType;
-  genres: Genre[];
+  type: string;
+  slides: MovieType[] | ActorType[];
+  genres?: Genre[];
 };
 function Carousel(props: PropType) {
-  const { slides, options, genres } = props;
+  const { slides, genres, type } = props;
+  const options: EmblaOptionsType = { dragFree: true, loop: true };
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [Autoplay()]);
 
   const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
@@ -48,9 +50,17 @@ function Carousel(props: PropType) {
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="embla__container">
           {slides && slides.length > 0 ? (
-            slides?.map((slide, index) => (
-              <MovieCard key={index} movie={slide} genres={genres} />
-            ))
+            slides?.map((slide, index) =>
+              type == "movie" ? (
+                <MovieCard
+                  key={index}
+                  movie={slide as MovieType}
+                  genres={genres}
+                />
+              ) : (
+                <ActorCard key={index} actor={slide as ActorType} />
+              )
+            )
           ) : (
             <p className="text-rose-700">Loading ...</p>
           )}

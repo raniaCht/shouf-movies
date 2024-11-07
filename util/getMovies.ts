@@ -21,7 +21,27 @@ export async function getGenres() {
   return result.json();
 }
 
-export async function getFeaturedMovies(
+export async function getMoviesByType(type: string) {
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${process.env.API_READ_ACCESS_TOKEN}`,
+    },
+  };
+
+  const result = await fetch(
+    `https://api.themoviedb.org/3/movie/${type}?language=en-US&page=1`,
+    options
+  );
+  if (!result.ok) {
+    throw new Error(`An error has occured ${result.status}`);
+  }
+
+  return result.json();
+}
+
+export async function getFeaturedActors(
   time: number = 0,
   shouldError: boolean = false
 ) {
@@ -34,7 +54,7 @@ export async function getFeaturedMovies(
   };
 
   const result = await fetch(
-    "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1",
+    "https://api.themoviedb.org/3/trending/person/day?language=en-US",
     options
   );
   if (!result.ok || shouldError) {

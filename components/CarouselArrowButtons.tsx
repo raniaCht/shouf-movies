@@ -60,7 +60,7 @@ export const PrevButton: React.FC<PropType> = ({ children, ...restProps }) => {
   return (
     <button
       type="button"
-      className="absolute top-1/2 -translate-y-1/2 -left-[5%] flex justify-center items-center"
+      className="absolute top-1/2 -translate-y-1/2 -left-[5%] hidden lg:flex justify-center items-center"
       {...restProps}
     >
       <ChevronLeft size={48} className="text-gray-600" strokeWidth={1} />
@@ -72,7 +72,7 @@ export const NextButton: React.FC<PropType> = ({ children, ...restProps }) => {
   return (
     <button
       type="button"
-      className="absolute top-1/2 -translate-y-1/2 -right-[5%] flex justify-center items-center"
+      className="absolute top-1/2 -translate-y-1/2 -right-[5%] hidden lg:flex justify-center items-center"
       {...restProps}
     >
       <ChevronRight size={48} className="text-gray-600" strokeWidth={1} />
