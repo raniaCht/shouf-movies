@@ -2,6 +2,7 @@ import { CirclePlay, Menu, Play, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import RatingMovie from "./RatingMovie";
 
 function Header() {
   return (
@@ -34,26 +35,7 @@ function Header() {
         <div className="flex-1 w-full flex flex-col justify-center items-start">
           <div className="flex flex-col justify-center items-start gap-2 w-[400px]">
             <h1 className="text-6xl font-bold">John Wick 3 : Parabellum</h1>
-            <div className="flex items-center gap-8">
-              <div className="flex items-end gap-3">
-                <Image
-                  src={"/icons/imdb.png"}
-                  width={35}
-                  height={17}
-                  alt="imdb"
-                />
-                <p className="text-xs">86.0 / 100</p>
-              </div>
-              <div className="flex items-end gap-3">
-                <Image
-                  src={"/icons/tomato.png"}
-                  width={16}
-                  height={17}
-                  alt="imdb"
-                />
-                <p className="text-xs">97%</p>
-              </div>
-            </div>
+            <RatingMovie voteAverage={97} voteCount={89} />
             <p>
               John Wick is on the run after killing a member of the
               international assassins' guild, and with a $14 million price tag

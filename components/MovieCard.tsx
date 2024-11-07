@@ -1,64 +1,48 @@
 "use client";
-import { MovieType } from "@/util/movieType";
+import { Genre, MovieType } from "@/util/movieType";
+import moment from "moment";
+import Image from "next/image";
+import RatingMovie from "./RatingMovie";
 
 type props = {
   movie: MovieType;
+  genres: Genre[];
 };
 
-const MovieCard = ({ movie }: props) => {
+const MovieCard = ({ movie, genres }: props) => {
   return (
-    <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <a href={`/movies/${movie.id}`}>
-        <img
-          className="p-8 rounded-t-lg"
-          src={`http://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-          alt="product image"
+    <div className="ml-8 flex-shrink-0 flex-grow-0 w-[50%] md:w-[20%] translate-0">
+      <div className="flex flex-col w-full text-black">
+        <Image
+          src={`http://image.tmdb.org/t/p/original${movie.poster_path}`}
+          width={100}
+          height={100}
+          alt=""
+          className="w-full h-auto"
         />
-      </a>
-      <div className="px-5 pb-5">
-        <a href="#">
-          <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            {movie.title}
-          </h5>
-        </a>
-        <div className="flex items-center mt-2.5 mb-5">
-          <div className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3 flex justify-center items-center">
-            <svg
-              className="w-4 h-4 text-yellow-800 me-1"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 22 20"
-            >
-              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-            </svg>
-            {movie.vote_average}
-          </div>
-          <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3 flex justify-center items-center">
-            <svg
-              className="w-4 h-4 text-gray-800"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 14 18"
-            >
-              <path d="M7 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm2 1H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
-            </svg>
-            <span>{movie.vote_count}</span>
-          </span>
-        </div>
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-bold text-gray-900 dark:text-white">
-            {movie.release_date.toString()} <br />
-            {movie.genre_ids[0]}
-          </span>
-          <a
-            href="#"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Read more
-          </a>
-        </div>
+        <span className="text-gray-600 text-sm mt-1">
+          {moment(movie.release_date).format("MMM DD, YYYY")}
+        </span>
+        <h3 className="text-black text-lg mt-2">{movie.original_title}</h3>
+        <RatingMovie
+          voteCount={movie.vote_count}
+          voteAverage={movie.vote_average}
+        />
+        <span>
+          {movie.genre_ids.map((id, i) => {
+            if (genres && genres.length > 0) {
+              const item = genres.find((genre) => genre.id == id);
+              return (
+                <span className="text-gray-600 text-xs">
+                  {item?.name}
+                  {movie.genre_ids.length > 1 && movie.genre_ids.length > i + 1
+                    ? ","
+                    : "."}
+                </span>
+              );
+            } else <></>;
+          })}
+        </span>
       </div>
     </div>
   );
